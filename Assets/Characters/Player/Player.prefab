@@ -120,6 +120,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 026a45264a18c6548898d05bb7a223bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 2
+  canMove: 0
+  movementFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
 --- !u!50 &4900222048299472427
 Rigidbody2D:
   serializedVersion: 4
