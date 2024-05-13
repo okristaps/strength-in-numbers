@@ -1,10 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    Vector2 movementInput;
+    public float moveSpeed = 1f;
+
+    float
+
+            speedX,
+            speedY;
+
+    public bool canMove = true;
+
+    public ContactFilter2D movementFilter;
 
     Rigidbody2D rb;
 
@@ -13,12 +23,10 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // private void FixedUpdate() {
-    //     if (movementInput != Vector2)
-    // }
-
-    // void OnMove(InputValue movementValue)
-    // {
-    //     movementInput = movementValue.Get<Vector2>();
-    // }
+    void Update()
+    {
+        speedX = Input.GetAxis("Horizontal");
+        speedY = Input.GetAxis("Vertical");
+        rb.velocity = new Vector2(speedX * moveSpeed, speedY * moveSpeed);
+    }
 }
