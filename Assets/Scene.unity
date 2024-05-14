@@ -123,11 +123,30 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &98031942 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 680057995179623681, guid: 36fcdda7c8a9e214b8540963643d1219, type: 3}
+  m_PrefabInstance: {fileID: 775699530}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &98031943 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6262259370396712515, guid: 36fcdda7c8a9e214b8540963643d1219, type: 3}
   m_PrefabInstance: {fileID: 775699530}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &98031944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98031942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dd9684792038e44882de9a96b837d4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveDistance: 10
+  moveDistance2: -1
 --- !u!1 &121166557
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +336,7 @@ GameObject:
   m_Layer: 0
   m_Name: MuzzleFlash
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -480,7 +499,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6262259370396712515, guid: 36fcdda7c8a9e214b8540963643d1219, type: 3}
       insertIndex: -1
       addedObject: {fileID: 665790606}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 680057995179623681, guid: 36fcdda7c8a9e214b8540963643d1219, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 98031944}
   m_SourcePrefab: {fileID: 100100000, guid: 36fcdda7c8a9e214b8540963643d1219, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

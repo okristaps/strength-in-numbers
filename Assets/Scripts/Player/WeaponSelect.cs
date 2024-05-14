@@ -10,9 +10,8 @@ public class WeaponSelect : MonoBehaviour
 
     public int previousWeaponIndex = 0;
 
-    public int[] autoWeaponIndexes = { 1, 3 };
+    public int[] autoWeaponIndexes = { 2, 4 };
 
-    //
     void Start()
     {
         GetComponent<SpriteRenderer>().sprite =

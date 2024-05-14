@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Animator _muzzleFlashAnimator;
 
+    public int currentWeaponIndex = 0;
+
     float
 
             speedX,
@@ -45,14 +47,11 @@ public class PlayerController : MonoBehaviour
         HandleWalk();
         HandleShooting();
         LookAtMouse();
+        currentWeaponIndex = _weaponSelect.currentWeaponIndex;
     }
 
     private void HandleShooting()
     {
-        // bool isAuto =
-        //     _weaponSelect
-        //         .autoWeaponIndexes
-        //         .Contains(_weaponSelect.currentWeaponIndex);
         bool isAuto =
             _weaponSelect.currentWeaponIndex == 2 ||
             _weaponSelect.currentWeaponIndex == 4;
