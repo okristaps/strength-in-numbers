@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     private Transform _gunPoint;
 
     [SerializeField]
-    private float _weaponRange = 50f;
+    private float _weaponRange = 10f;
 
     [SerializeField]
     private Animator _muzzleFlashAnimator;
@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            _muzzleFlashAnimator.SetTrigger("Shoot");
+
             Vector3 mousePosition =
                 Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3 direction = (mousePosition - _gunPoint.position).normalized;
@@ -59,7 +61,7 @@ public class PlayerController : MonoBehaviour
             var trail =
                 Instantiate(_bulletTrail,
                 _gunPoint.position,
-                Quaternion.identity).GetComponent<BulletTrail>();
+                transform.rotation).GetComponent<BulletTrail>();
 
             if (hit.collider != null)
             {
