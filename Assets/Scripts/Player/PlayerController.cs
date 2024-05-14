@@ -1,11 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rb;
+
+    public ContactFilter2D movementFilter;
 
     public float moveSpeed = 1f;
 
@@ -28,53 +32,67 @@ public class PlayerController : MonoBehaviour
 
     public bool canMove = true;
 
-    public ContactFilter2D movementFilter;
+    private WeaponSelect _weaponSelect;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        _weaponSelect = GetComponent<WeaponSelect>();
     }
 
     void Update()
     {
-        speedX = Input.GetAxis("Horizontal");
-        speedY = Input.GetAxis("Vertical");
-        rb.velocity = new Vector2(speedX * moveSpeed, speedY * moveSpeed);
-
+        HandleWalk();
         HandleShooting();
         LookAtMouse();
     }
 
     private void HandleShooting()
     {
-        if (Input.GetMouseButtonDown(0))
+        // bool isAuto =
+        //     _weaponSelect
+        //         .autoWeaponIndexes
+        //         .Contains(_weaponSelect.currentWeaponIndex);
+        bool isAuto =
+            _weaponSelect.currentWeaponIndex == 2 ||
+            _weaponSelect.currentWeaponIndex == 4;
+
+        if (isAuto && Input.GetMouseButton(0))
         {
-            _muzzleFlashAnimator.SetTrigger("Shoot");
+            HandleRayCast();
+        }
+        else if (!isAuto && Input.GetMouseButtonDown(0))
+        {
+            HandleRayCast();
+        }
+    }
 
-            Vector3 mousePosition =
-                Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 direction = (mousePosition - _gunPoint.position).normalized;
+    // Shooting animation
+    private void HandleRayCast()
+    {
+        _muzzleFlashAnimator.SetTrigger("Shoot");
 
-            var hit =
-                Physics2D.Raycast(_gunPoint.position, direction, _weaponRange);
+        Vector3 mousePosition =
+            Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 direction = (mousePosition - _gunPoint.position).normalized;
 
-            var trail =
-                Instantiate(_bulletTrail,
-                _gunPoint.position,
-                transform.rotation).GetComponent<BulletTrail>();
+        var hit =
+            Physics2D.Raycast(_gunPoint.position, direction, _weaponRange);
 
-            if (hit.collider != null)
-            {
-                trail.SetTargetPosition(hit.point);
-                var hittable = hit.collider.GetComponent<IHittable>();
-                hittable?.Hit();
-            }
-            else
-            {
-                Vector3 endPosition =
-                    _gunPoint.position + direction * _weaponRange;
-                trail.SetTargetPosition (endPosition);
-            }
+        var trail =
+            Instantiate(_bulletTrail, _gunPoint.position, transform.rotation)
+                .GetComponent<BulletTrail>();
+
+        if (hit.collider != null)
+        {
+            trail.SetTargetPosition(hit.point);
+            var hittable = hit.collider.GetComponent<IHittable>();
+            hittable?.Hit();
+        }
+        else
+        {
+            Vector3 endPosition = _gunPoint.position + direction * _weaponRange;
+            trail.SetTargetPosition (endPosition);
         }
     }
 
@@ -83,6 +101,13 @@ public class PlayerController : MonoBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.up =
             mousePos - new Vector2(transform.position.x, transform.position.y);
+    }
+
+    private void HandleWalk()
+    {
+        speedX = Input.GetAxis("Horizontal");
+        speedY = Input.GetAxis("Vertical");
+        rb.velocity = new Vector2(speedX * moveSpeed, speedY * moveSpeed);
     }
 }
 

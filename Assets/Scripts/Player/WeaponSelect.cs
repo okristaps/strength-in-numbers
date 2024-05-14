@@ -6,10 +6,13 @@ public class WeaponSelect : MonoBehaviour
 {
     public Sprite[] weaponSprites;
 
-    private int currentWeaponIndex = 0;
+    public int currentWeaponIndex = 0;
 
-    private int previousWeaponIndex = 0;
+    public int previousWeaponIndex = 0;
 
+    public int[] autoWeaponIndexes = { 1, 3 };
+
+    //
     void Start()
     {
         GetComponent<SpriteRenderer>().sprite =
@@ -18,6 +21,8 @@ public class WeaponSelect : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(" weaponSprites.Length " + weaponSprites.Length);
+
         for (int i = 0; i < weaponSprites.Length; i++)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
@@ -41,7 +46,6 @@ public class WeaponSelect : MonoBehaviour
             }
             else
             {
-                // Scroll down
                 ChangeWeapon(currentWeaponIndex - 1);
             }
         }

@@ -20,7 +20,7 @@ indent_style = space
 indent_size = 4
 
 # Enforce 80-character line length limit
-max_line_length = 80
+max_line_length = 200
 
 # C# coding styles
 [*.cs]
