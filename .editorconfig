@@ -1,0 +1,54 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# Top-most EditorConfig file
+root = true
+
+# All files should use LF line endings
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+# Set the charset to UTF-8
+charset = utf-8
+
+# Remove any whitespace at the end of lines
+trim_trailing_whitespace = true
+
+# Indentation settings
+[*.cs]
+indent_style = space
+indent_size = 4
+
+# Enforce 80-character line length limit
+max_line_length = 200
+
+# C# coding styles
+[*.cs]
+# Use tabs for indentation
+indent_style = tab
+
+# Use LF line endings
+end_of_line = lf
+
+# Place opening braces on a new line
+csharp_new_line_before_open_brace = true
+
+# Require explicit access modifiers
+csharp_style_require_accessibility_modifiers = true
+
+# Require braces for single-line control statements
+csharp_prefer_braces = true
+
+# Enforce 'this.' qualifier for member access
+dotnet_style_qualification_for_field = true:suggestion
+dotnet_style_qualification_for_property = true:suggestion
+dotnet_style_qualification_for_method = true:suggestion
+
+# Ordering of using directives
+dotnet_sort_system_directives_first = true
+dotnet_style_qualification_for_type = true:suggestion
+
+# Enforce explicit this usage where applicable
+dotnet_style_prefer_inferred_tuple_names = false
+dotnet_style_require_explicit_tuple_names = true
+dotnet_style_require_accessibility_modifiers = always
