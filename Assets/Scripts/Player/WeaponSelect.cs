@@ -12,7 +12,7 @@ public class WeaponSelect : MonoBehaviour
 
     public int[] autoWeaponIndexes = { 2, 4 };
 
-    void Start()
+    public void Start()
     {
         GetComponent<SpriteRenderer>().sprite =
             weaponSprites[currentWeaponIndex];
@@ -20,8 +20,6 @@ public class WeaponSelect : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(" weaponSprites.Length " + weaponSprites.Length);
-
         for (int i = 0; i < weaponSprites.Length; i++)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
