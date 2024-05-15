@@ -11,7 +11,7 @@ public class BulletTrail : MonoBehaviour
     private float _progress;
 
     [SerializeField]
-    private float _speed = 200f;
+    private float _speed = 100f;
 
     void Start()
     {

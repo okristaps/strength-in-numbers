@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Animator _muzzleFlashAnimator;
 
+    private WeaponSelect _weaponSelect;
+
     public int currentWeaponIndex = 0;
 
     float
@@ -34,7 +36,9 @@ public class PlayerController : MonoBehaviour
 
     public bool canMove = true;
 
-    private WeaponSelect _weaponSelect;
+    private bool isShooting = false;
+
+    private float shotDelay = 0.05f;
 
     void Start()
     {
@@ -50,19 +54,35 @@ public class PlayerController : MonoBehaviour
         currentWeaponIndex = _weaponSelect.currentWeaponIndex;
     }
 
+    private IEnumerator AutoShoot()
+    {
+        isShooting = true;
+        while (isShooting)
+        {
+            HandleRayCast();
+            yield return new WaitForSeconds(shotDelay);
+        }
+    }
+
     private void HandleShooting()
     {
         bool isAuto =
             _weaponSelect.currentWeaponIndex == 2 ||
             _weaponSelect.currentWeaponIndex == 4;
-
         if (isAuto && Input.GetMouseButton(0))
         {
-            HandleRayCast();
+            if (!isShooting)
+            {
+                StartCoroutine(AutoShoot());
+            }
         }
         else if (!isAuto && Input.GetMouseButtonDown(0))
         {
             HandleRayCast();
+        }
+        if (!Input.GetMouseButton(0))
+        {
+            isShooting = false;
         }
     }
 
@@ -71,27 +91,26 @@ public class PlayerController : MonoBehaviour
     {
         _muzzleFlashAnimator.SetTrigger("Shoot");
 
-        Vector3 mousePosition =
-            Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 direction = (mousePosition - _gunPoint.position).normalized;
+        float maxDistance = 10f;
 
-        var hit =
-            Physics2D.Raycast(_gunPoint.position, direction, _weaponRange);
+        RaycastHit2D hit =
+            Physics2D.Raycast(_gunPoint.position, transform.up, maxDistance);
 
         var trail =
-            Instantiate(_bulletTrail, _gunPoint.position, transform.rotation)
-                .GetComponent<BulletTrail>();
+            Instantiate(_bulletTrail, _gunPoint.position, transform.rotation);
+
+        var trailScript = trail.GetComponent<BulletTrail>();
 
         if (hit.collider != null)
         {
-            trail.SetTargetPosition(hit.point);
+            trailScript.SetTargetPosition(hit.point);
             var hittable = hit.collider.GetComponent<IHittable>();
             hittable?.Hit();
         }
         else
         {
-            Vector3 endPosition = _gunPoint.position + direction * _weaponRange;
-            trail.SetTargetPosition (endPosition);
+            var endPosition = _gunPoint.position + transform.up * maxDistance;
+            trailScript.SetTargetPosition (endPosition);
         }
     }
 
