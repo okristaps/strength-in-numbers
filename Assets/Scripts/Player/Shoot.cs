@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Shoot : MonoBehaviour
@@ -7,6 +8,11 @@ public class Shoot : MonoBehaviour
     private WeaponSelect _weaponSelect;
 
     public RaycastShooter _raycastShooter;
+
+    [SerializeField]
+    public TextMeshProUGUI bulletsInMagazineText;
+
+    int bulletsInMagazine = 0;
 
     private bool isShooting = false;
 
@@ -32,6 +38,9 @@ public class Shoot : MonoBehaviour
 
     private void Update()
     {
+        bulletsInMagazine = magazineSizes[_weaponSelect.currentWeaponIndex];
+        bulletsInMagazineText.text = bulletsInMagazine.ToString();
+        HandleShooting();
     }
 
     private IEnumerator AutoShoot()
