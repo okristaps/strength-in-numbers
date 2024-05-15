@@ -104,12 +104,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSprites:
   - {fileID: 2104820298, guid: 85d49c20e3c826a4f940526acf0ab269, type: 3}
-  - {fileID: -857488305, guid: 85d49c20e3c826a4f940526acf0ab269, type: 3}
   - {fileID: -1870315060, guid: 85d49c20e3c826a4f940526acf0ab269, type: 3}
   - {fileID: -19322455, guid: 85d49c20e3c826a4f940526acf0ab269, type: 3}
   - {fileID: -1531158481, guid: 85d49c20e3c826a4f940526acf0ab269, type: 3}
   - {fileID: 1472196787, guid: 85d49c20e3c826a4f940526acf0ab269, type: 3}
-  - {fileID: -1462320692, guid: 85d49c20e3c826a4f940526acf0ab269, type: 3}
+  currentWeaponIndex: 0
+  previousWeaponIndex: 0
+  autoWeaponIndexes: 0200000004000000
 --- !u!114 &3943295358788149839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,12 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 026a45264a18c6548898d05bb7a223bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
-  _bulletTrail: {fileID: 5016089526994889773}
-  _gunPoint: {fileID: 6262259370396712515}
-  _weaponRange: 40
-  _muzzleFlashAnimator: {fileID: 0}
-  canMove: 1
   movementFilter:
     useTriggers: 0
     useLayerMask: 0
@@ -142,6 +137,13 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  moveSpeed: 4
+  _bulletTrail: {fileID: 5016089526994889773}
+  _gunPoint: {fileID: 6262259370396712515}
+  _weaponRange: 40
+  _muzzleFlashAnimator: {fileID: 0}
+  currentWeaponIndex: 0
+  canMove: 1
 --- !u!50 &4900222048299472427
 Rigidbody2D:
   serializedVersion: 4
