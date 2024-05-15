@@ -6,7 +6,7 @@ public class Inventory : MonoBehaviour
 {
 	public bool[] isFull;
 	public GameObject[] slots;
-
+	//test
     void Start()
     {
         
