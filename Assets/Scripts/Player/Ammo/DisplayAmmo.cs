@@ -26,6 +26,7 @@ public class DisplayAmmo : MonoBehaviour {
 			ammoInMagazine = 0;
 			return;
 		}
+		// If doesnt work check if you have added ammo text from ammo canvas to the DisplayAmmo script	
 		ammoLeft = _ammo.reserveAmmo[_weaponSelect.currentWeaponIndex];
 		ammoInMagazine = _ammo.bulletsInMag[_weaponSelect.currentWeaponIndex];
 	}

@@ -91,7 +91,6 @@ public class Ammo : MonoBehaviour {
 
 
 	public void ReloadWeapon() {
-		Debug.Log("Reloading weapon");
 
 		if (isReloading) {
 			return;
@@ -107,7 +106,6 @@ public class Ammo : MonoBehaviour {
 
 				// calc available ammo for reloading from current reserve
 				int availableAmmo = reserveAmmo[cwIndex];
-				Debug.Log("Available ammo: " + availableAmmo);
 				bulletsToReload = Mathf.Min(bulletsToReload, availableAmmo);
 
 				// deductt bullets from reserve and add to the magazine
