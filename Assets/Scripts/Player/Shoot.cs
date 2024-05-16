@@ -1,61 +1,46 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
 
 public class Shoot : MonoBehaviour {
 	private WeaponSelect _weaponSelect;
-
 	private Ammo _ammo;
-
 	public RaycastShooter _raycastShooter;
 
+	// shooting state
 	private bool isShooting = false;
-	private const int MAX_MAGAZINE_SIZE = 30;
-
-	private bool isReloading = false;
-
-	private float reloadTime = 1f;
-
-	public int bulletsInMagazine = 0;
-
-	public int bulletDamage = 25;
-	public int bulletsPerMinute = 100;
+	private int cwIndex;
 
 
 	void Start() {
 		_weaponSelect = GetComponent<WeaponSelect>();
 		_raycastShooter = GetComponent<RaycastShooter>();
 		_ammo = GetComponent<Ammo>();
-	}
 
+	}
 
 	void Update() {
-		bulletsPerMinute = _ammo.FireRate[_weaponSelect.currentWeaponIndex];
-		bulletDamage = _ammo.WeaponDamages[_weaponSelect.currentWeaponIndex];
+		cwIndex = _weaponSelect.currentWeaponIndex;
 	}
-
-
 
 	private IEnumerator AutoShoot() {
 		isShooting = true;
 		bool wasShootingBeforeReload = false;
-		float timeBetweenShots = 60f / bulletsPerMinute;
+		float timeBetweenShots = 60f / _ammo.fireRates[cwIndex];
 
-		while (isShooting && _ammo.magazineSizes[_weaponSelect.currentWeaponIndex] > 0) {
-			_ammo.magazineSizes[_weaponSelect.currentWeaponIndex]--;
-			_raycastShooter.HandleRayCast();
+		while (isShooting && _ammo.bulletsInMag[cwIndex] > 0) {
+			HandleBulletShot();
 
 			// apply bullet damage
-			// applydmg(bulletDamage);
+			// applydmg(cwBulletDamage);
 
-			if (_ammo.magazineSizes[_weaponSelect.currentWeaponIndex] == 0) {
+			if (_ammo.bulletsInMag[cwIndex] == 0) {
 				// wait for reloading to finish when mag  empty
 				wasShootingBeforeReload = true;
-				yield return StartCoroutine(ReloadCoroutine(() => {
+				yield return StartCoroutine(_ammo.ReloadCoroutine(() => {
 					// empty reload callback
 				}));
 			}
@@ -69,13 +54,12 @@ public class Shoot : MonoBehaviour {
 		}
 	}
 	public void HandleShooting() {
-		bool isAuto = _weaponSelect.currentWeaponIndex == 2 || _weaponSelect.currentWeaponIndex == 4;
+		bool isAuto = cwIndex == 2 || cwIndex == 4;
+		int bulletsInMag = _ammo.bulletsInMag[cwIndex];
 
-		int magazineSize = _ammo.magazineSizes[_weaponSelect.currentWeaponIndex];
-
-		if (_ammo.magazineSizes.ContainsKey(_weaponSelect.currentWeaponIndex)) {
-			if (magazineSize > 0) {
-				isReloading = false;
+		if (_ammo.bulletsInMag.ContainsKey(cwIndex)) {
+			if (bulletsInMag > 0) {
+				_ammo.isReloading = false;
 				if (isAuto && Input.GetMouseButton(0)) {
 					if (!isShooting) {
 						StartCoroutine(AutoShoot());
@@ -83,12 +67,11 @@ public class Shoot : MonoBehaviour {
 				}
 				else if (!isAuto && Input.GetMouseButtonDown(0)) {
 					// detuct ammo from the magazine when shooting
-					_ammo.magazineSizes[_weaponSelect.currentWeaponIndex]--;
-					_raycastShooter.HandleRayCast();
+					HandleBulletShot();
 				}
 			}
 			else {
-				ReloadWeapon(_weaponSelect.currentWeaponIndex);
+				_ammo.ReloadWeapon();
 			}
 		}
 
@@ -97,40 +80,8 @@ public class Shoot : MonoBehaviour {
 		}
 	}
 
-	private void ReloadWeapon(int currentWeaponIndex) {
-		Debug.Log("Reloading weapon");
-
-		if (isReloading) {
-			return;
-		}
-
-		isReloading = true;
-
-		StartCoroutine(
-			ReloadCoroutine(() => {
-				int magazineSize = _ammo.magazineSizes[currentWeaponIndex];
-				int bulletsInMagazine = magazineSize;
-				int bulletsToReload = Mathf.Max(0, MAX_MAGAZINE_SIZE - bulletsInMagazine);
-
-				// calc available ammo for reloading from current reserve
-				int availableAmmo = _ammo.reserveAmmo[currentWeaponIndex];
-				Debug.Log("Available ammo: " + availableAmmo);
-				bulletsToReload = Mathf.Min(bulletsToReload, availableAmmo);
-
-				// deductt bullets from reserve and add to the magazine
-				if (bulletsToReload > 0) {
-					_ammo.magazineSizes[currentWeaponIndex] += bulletsToReload;
-					_ammo.reserveAmmo[currentWeaponIndex] -= bulletsToReload;
-				}
-			})
-		);
-	}
-
-	private IEnumerator ReloadCoroutine(Action onComplete) {
-		yield return new WaitForSeconds(reloadTime);
-
-		onComplete?.Invoke();
-
-		isReloading = false;
+	private void HandleBulletShot() {
+		_ammo.DeductBullet();
+		_raycastShooter.HandleRayCast();
 	}
 }

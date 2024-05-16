@@ -1,33 +1,47 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-
 public class Ammo : MonoBehaviour {
 	private WeaponSelect _weaponSelect;
 
 	private DisplayAmmo _displayAmmo;
 
-	public Dictionary<int, int> magazineSizes = new Dictionary<int, int>
+
+	// bullets in magazine
+	public Dictionary<int, int> bulletsInMag = new Dictionary<int, int>
 	{
 		{ 0, 30 },
 		{ 1, 6 },
-		{ 2, 6 },
+		{ 2, 30 },
 		{ 3, 6 },
 		{ 4, 2000 }
 	};
 
+
+	// magazine size
+	public Dictionary<int, int> magSizes = new Dictionary<int, int>
+	{
+		{ 0, 20 },
+		{ 1, 6 },
+		{ 2, 60 },
+		{ 3, 6 },
+		{ 4, 500 }
+	};
+
+	// ammo in reserve
 	public Dictionary<int, int> reserveAmmo = new Dictionary<int, int>
 	{
 		{ 0, 100 },
 		{ 1, 36 },
-		{ 2, 50 },
+		{ 2, 60 },
 		{ 3, 50 },
-		{ 4, 50 }
+		{ 4, 5000 }
 	};
 
 	// 1 bullet damage points
-	public Dictionary<int, int> WeaponDamages = new Dictionary<int, int>
+	public Dictionary<int, int> weaponDamages = new Dictionary<int, int>
 {
 		{ 0, 25 },
 		{ 1, 70 },
@@ -38,18 +52,29 @@ public class Ammo : MonoBehaviour {
 
 
 	// Bullets per minute
-	public Dictionary<int, int> FireRate = new Dictionary<int, int>
+	public Dictionary<int, int> fireRates = new Dictionary<int, int>
 {
 		{ 0, 200 },
 		{ 1, 100 },
-		{ 2, 400 },
+		{ 2, 10000 },
 		{ 3, 60 },
 		{ 4, 10000 }
 	};
 
-	public int currentBullets = 0;
+	public Dictionary<int, float> reloadTimes = new Dictionary<int, float>
+{
+		{ 0, 0.5f },
+		{ 1, 1f },
+		{ 2, 0.8f },
+		{ 3, 2f },
+		{ 4, 5f }
+	};
 
-	public int totalBulletsLeft = 0;
+
+	// weapon ammo handle stuff
+	public bool isReloading = false;
+
+	private int cwIndex;
 
 	void Start() {
 		_weaponSelect = GetComponent<WeaponSelect>();
@@ -60,33 +85,53 @@ public class Ammo : MonoBehaviour {
 		if (_weaponSelect == null) {
 			return;
 		}
-
-		currentBullets = GetCurrentBulletsInMagazine(_weaponSelect.currentWeaponIndex);
-		totalBulletsLeft = GetTotalBulletsLeft(_weaponSelect.currentWeaponIndex);
-
+		cwIndex = _weaponSelect.currentWeaponIndex;
 		_displayAmmo.UpdateAmmoText();
 	}
 
-	public int GetCurrentBulletsInMagazine(int weaponIndex) {
-		if (magazineSizes.ContainsKey(weaponIndex)) {
-			return magazineSizes[weaponIndex];
+
+	public void ReloadWeapon() {
+		Debug.Log("Reloading weapon");
+
+		if (isReloading) {
+			return;
 		}
-		else {
-			return 0;
-		}
+
+		isReloading = true;
+
+		StartCoroutine(
+			ReloadCoroutine(() => {
+				int magazineSize = magSizes[cwIndex];
+				int cwBulletsInMagazine = bulletsInMag[cwIndex]; ;
+				int bulletsToReload = Mathf.Max(0, magazineSize - cwBulletsInMagazine);
+
+				// calc available ammo for reloading from current reserve
+				int availableAmmo = reserveAmmo[cwIndex];
+				Debug.Log("Available ammo: " + availableAmmo);
+				bulletsToReload = Mathf.Min(bulletsToReload, availableAmmo);
+
+				// deductt bullets from reserve and add to the magazine
+				if (bulletsToReload > 0) {
+					reserveAmmo[cwIndex] -= bulletsToReload;
+					bulletsInMag[cwIndex] += bulletsToReload;
+
+				}
+			})
+		);
 	}
 
-	public int GetTotalBulletsLeft(int weaponIndex) {
-		int totalBulletsLeft = 0;
 
-		if (reserveAmmo.ContainsKey(weaponIndex)) {
-			totalBulletsLeft += reserveAmmo[weaponIndex];
-		}
 
-		if (magazineSizes.ContainsKey(weaponIndex)) {
-			totalBulletsLeft += magazineSizes[weaponIndex];
-		}
 
-		return totalBulletsLeft;
+	public IEnumerator ReloadCoroutine(Action onComplete) {
+		yield return new WaitForSeconds(reloadTimes[cwIndex]);
+		onComplete?.Invoke();
+		isReloading = false;
 	}
+
+
+	public void DeductBullet() {
+		bulletsInMag[cwIndex]--;
+	}
+
 }
