@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-using Int32 = System.Int32;
+
 
 public class Shoot : MonoBehaviour {
 	private WeaponSelect _weaponSelect;
@@ -13,9 +14,6 @@ public class Shoot : MonoBehaviour {
 	public RaycastShooter _raycastShooter;
 
 	private bool isShooting = false;
-
-	private float shotDelay = 0.05f;
-
 	private const int MAX_MAGAZINE_SIZE = 30;
 
 	private bool isReloading = false;
@@ -24,39 +22,52 @@ public class Shoot : MonoBehaviour {
 
 	public int bulletsInMagazine = 0;
 
+	public int bulletDamage = 25;
+	public int bulletsPerMinute = 100;
+
+
 	void Start() {
 		_weaponSelect = GetComponent<WeaponSelect>();
 		_raycastShooter = GetComponent<RaycastShooter>();
 		_ammo = GetComponent<Ammo>();
 	}
 
+
+	void Update() {
+		bulletsPerMinute = _ammo.FireRate[_weaponSelect.currentWeaponIndex];
+		bulletDamage = _ammo.WeaponDamages[_weaponSelect.currentWeaponIndex];
+	}
+
+
+
 	private IEnumerator AutoShoot() {
 		isShooting = true;
-		bool wasShootingBeforeReload = false; // Flag to track if shooting was active before reload
+		bool wasShootingBeforeReload = false;
+		float timeBetweenShots = 60f / bulletsPerMinute;
 
 		while (isShooting && _ammo.magazineSizes[_weaponSelect.currentWeaponIndex] > 0) {
 			_ammo.magazineSizes[_weaponSelect.currentWeaponIndex]--;
 			_raycastShooter.HandleRayCast();
 
+			// apply bullet damage
+			// applydmg(bulletDamage);
+
 			if (_ammo.magazineSizes[_weaponSelect.currentWeaponIndex] == 0) {
-				// If the magazine is empty, wait for reloading to finish
+				// wait for reloading to finish when mag  empty
 				wasShootingBeforeReload = true;
-				yield return StartCoroutine(
-					ReloadCoroutine(() => {
-						// Reload completed callback
-					})
-				);
+				yield return StartCoroutine(ReloadCoroutine(() => {
+					// empty reload callback
+				}));
 			}
 
-			yield return new WaitForSeconds(shotDelay);
+			yield return new WaitForSeconds(timeBetweenShots);
 		}
 
-		// Resume shooting if the player was holding down the mouse button during reload
+		// resume shooting if msbtndown on while reloading
 		if (wasShootingBeforeReload && isShooting) {
 			StartCoroutine(AutoShoot());
 		}
 	}
-
 	public void HandleShooting() {
 		bool isAuto = _weaponSelect.currentWeaponIndex == 2 || _weaponSelect.currentWeaponIndex == 4;
 
@@ -94,8 +105,6 @@ public class Shoot : MonoBehaviour {
 		}
 
 		isReloading = true;
-
-		Debug.Log("isReloading" + isReloading);
 
 		StartCoroutine(
 			ReloadCoroutine(() => {
