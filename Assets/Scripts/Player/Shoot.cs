@@ -1,18 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+using Int32 = System.Int32;
+
 public class Shoot : MonoBehaviour
 {
     private WeaponSelect _weaponSelect;
 
+    private Ammo _ammo;
+
     public RaycastShooter _raycastShooter;
-
-    [SerializeField]
-    public TextMeshProUGUI bulletsInMagazineText;
-
-    int bulletsInMagazine = 0;
 
     private bool isShooting = false;
 
@@ -20,36 +20,48 @@ public class Shoot : MonoBehaviour
 
     private const int MAX_MAGAZINE_SIZE = 30;
 
-    private Dictionary<int, int> magazineSizes = new Dictionary<int, int>();
+    private bool isReloading = false;
 
-    private Dictionary<int, int> reserveAmmo = new Dictionary<int, int>();
+    private float reloadTime = 1f;
+
+    public int bulletsInMagazine = 0;
 
     void Start()
     {
         _weaponSelect = GetComponent<WeaponSelect>();
         _raycastShooter = GetComponent<RaycastShooter>();
-
-        magazineSizes.Add(0, 10);
-        reserveAmmo.Add(0, 100);
-
-        magazineSizes.Add(1, 6);
-        reserveAmmo.Add(1, 50);
-    }
-
-    private void Update()
-    {
-        bulletsInMagazine = magazineSizes[_weaponSelect.currentWeaponIndex];
-        bulletsInMagazineText.text = bulletsInMagazine.ToString();
-        HandleShooting();
+        _ammo = GetComponent<Ammo>();
     }
 
     private IEnumerator AutoShoot()
     {
         isShooting = true;
-        while (isShooting)
+        bool wasShootingBeforeReload = false; // Flag to track if shooting was active before reload
+
+        while (isShooting &&
+            _ammo.magazineSizes[_weaponSelect.currentWeaponIndex] > 0
+        )
         {
+            _ammo.magazineSizes[_weaponSelect.currentWeaponIndex]--;
             _raycastShooter.HandleRayCast();
+
+            if (_ammo.magazineSizes[_weaponSelect.currentWeaponIndex] == 0)
+            {
+                // If the magazine is empty, wait for reloading to finish
+                wasShootingBeforeReload = true;
+                yield return StartCoroutine(ReloadCoroutine(() =>
+                    {
+                        // Reload completed callback
+                    }));
+            }
+
             yield return new WaitForSeconds(shotDelay);
+        }
+
+        // Resume shooting if the player was holding down the mouse button during reload
+        if (wasShootingBeforeReload && isShooting)
+        {
+            StartCoroutine(AutoShoot());
         }
     }
 
@@ -59,32 +71,32 @@ public class Shoot : MonoBehaviour
             _weaponSelect.currentWeaponIndex == 2 ||
             _weaponSelect.currentWeaponIndex == 4;
 
-        if (
-            magazineSizes.ContainsKey(_weaponSelect.currentWeaponIndex) &&
-            magazineSizes[_weaponSelect.currentWeaponIndex] > 0
-        )
-        {
-            Debug
-                .Log("Bullets in magazine: " +
-                magazineSizes[_weaponSelect.currentWeaponIndex]);
+        int magazineSize =
+            _ammo.magazineSizes[_weaponSelect.currentWeaponIndex];
 
-            if (isAuto && Input.GetMouseButton(0))
+        if (_ammo.magazineSizes.ContainsKey(_weaponSelect.currentWeaponIndex))
+        {
+            if (magazineSize > 0)
             {
-                if (!isShooting)
+                isReloading = false;
+                if (isAuto && Input.GetMouseButton(0))
                 {
-                    StartCoroutine(AutoShoot());
+                    if (!isShooting)
+                    {
+                        StartCoroutine(AutoShoot());
+                    }
+                }
+                else if (!isAuto && Input.GetMouseButtonDown(0))
+                {
+                    // detuct ammo from the magazine when shooting
+                    _ammo.magazineSizes[_weaponSelect.currentWeaponIndex]--;
+                    _raycastShooter.HandleRayCast();
                 }
             }
-            else if (!isAuto && Input.GetMouseButtonDown(0))
+            else
             {
-                // detuct ammo from the magazine when shooting
-                magazineSizes[_weaponSelect.currentWeaponIndex]--;
-                _raycastShooter.HandleRayCast();
+                ReloadWeapon(_weaponSelect.currentWeaponIndex);
             }
-        }
-        else
-        {
-            ReloadWeapon();
         }
 
         if (!Input.GetMouseButton(0))
@@ -93,26 +105,46 @@ public class Shoot : MonoBehaviour
         }
     }
 
-    private void ReloadWeapon()
+    private void ReloadWeapon(int currentWeaponIndex)
     {
-        int currentWeaponIndex = _weaponSelect.currentWeaponIndex;
+        Debug.Log("Reloading weapon");
 
-        // check if reserve ammo is available and the magazine is not full
-        if (
-            reserveAmmo.ContainsKey(currentWeaponIndex) &&
-            reserveAmmo[currentWeaponIndex] > 0 &&
-            magazineSizes.ContainsKey(currentWeaponIndex) &&
-            magazineSizes[currentWeaponIndex] < MAX_MAGAZINE_SIZE
-        )
+        if (isReloading)
         {
-            int bulletsToReload =
-                Mathf
-                    .Min(MAX_MAGAZINE_SIZE - magazineSizes[currentWeaponIndex],
-                    reserveAmmo[currentWeaponIndex]);
-
-            // detuct bullets from reserve and add to the magazine
-            reserveAmmo[currentWeaponIndex] -= bulletsToReload;
-            magazineSizes[currentWeaponIndex] += bulletsToReload;
+            return;
         }
+
+        isReloading = true;
+
+        Debug.Log("isReloading" + isReloading);
+
+        StartCoroutine(ReloadCoroutine(() =>
+        {
+            int magazineSize = _ammo.magazineSizes[currentWeaponIndex];
+            int bulletsInMagazine = magazineSize;
+            int bulletsToReload =
+                Mathf.Max(0, MAX_MAGAZINE_SIZE - bulletsInMagazine);
+
+            // calc available ammo for reloading from current reserve
+            int availableAmmo = _ammo.reserveAmmo[currentWeaponIndex];
+            Debug.Log("Available ammo: " + availableAmmo);
+            bulletsToReload = Mathf.Min(bulletsToReload, availableAmmo);
+
+            // deductt bullets from reserve and add to the magazine
+            if (bulletsToReload > 0)
+            {
+                _ammo.magazineSizes[currentWeaponIndex] += bulletsToReload;
+                _ammo.reserveAmmo[currentWeaponIndex] -= bulletsToReload;
+            }
+        }));
+    }
+
+    private IEnumerator ReloadCoroutine(Action onComplete)
+    {
+        yield return new WaitForSeconds(reloadTime);
+
+        onComplete?.Invoke();
+
+        isReloading = false;
     }
 }
