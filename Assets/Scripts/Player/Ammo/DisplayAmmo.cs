@@ -3,33 +3,36 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class DisplayAmmo : MonoBehaviour
-{
-    private Ammo _ammo;
+public class DisplayAmmo : MonoBehaviour {
+	private Ammo _ammo;
 
-    int ammoLeft;
+	int ammoLeft = 0;
 
-    int ammoInMagazine;
+	int ammoInMagazine = 0;
 
-    [SerializeField]
-    TextMeshProUGUI ammoText;
+	private WeaponSelect _weaponSelect;
 
-    void Start()
-    {
-        _ammo = GetComponent<Ammo>();
-    }
+	[SerializeField]
+	TextMeshProUGUI ammoText;
 
-    private void Update()
-    {
-        ammoLeft = _ammo.totalBulletsLeft;
-        ammoInMagazine = _ammo.currentBullets;
-    }
+	void Start() {
+		_ammo = GetComponent<Ammo>();
+		_weaponSelect = GetComponent<WeaponSelect>();
+	}
 
-    public void UpdateAmmoText()
-    {
-        ammoText.text =
-            ammoInMagazine.ToString() +
-            " / " +
-            (ammoLeft - ammoInMagazine).ToString();
-    }
+	private void Update() {
+		if (_weaponSelect == null) {
+			ammoLeft = 0;
+			ammoInMagazine = 0;
+			return;
+		}
+		// If doesnt work check if you have added ammo text from ammo canvas to the DisplayAmmo script	
+		ammoLeft = _ammo.reserveAmmo[_weaponSelect.currentWeaponIndex];
+		ammoInMagazine = _ammo.bulletsInMag[_weaponSelect.currentWeaponIndex];
+	}
+
+	public void UpdateAmmoText() {
+		ammoText.text = ammoInMagazine.ToString() + " / " + ammoLeft.ToString();
+	}
+
 }
