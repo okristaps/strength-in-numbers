@@ -1,29 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour {
 	Rigidbody2D rb;
 
+	Vector2 movementInput;
+	List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 	public ContactFilter2D movementFilter;
 
 	public float moveSpeed = 1f;
+	public float collisionOffset = 0.05f;
 
-	float speedX,
-		speedY;
 
 	void Start() {
 		rb = GetComponent<Rigidbody2D>();
 	}
 
-	public void HandleMovement() {
-		// walk
-		speedX = Input.GetAxis("Horizontal");
-		speedY = Input.GetAxis("Vertical");
-		rb.velocity = new Vector2(speedX * moveSpeed, speedY * moveSpeed);
 
-		// look at mouse
+	private void FixedUpdate() {
+
+		Debug.Log("Happened?");
+		if (movementInput != Vector2.zero) {
+
+
+			int count = rb.Cast(movementInput, movementFilter, castCollisions, moveSpeed * Time.fixedDeltaTime + collisionOffset);
+			rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime);
+
+			if (count == 0) {
+				rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime);
+			}
+		}
+
 		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		transform.up = mousePos - new Vector2(transform.position.x, transform.position.y);
 	}
+
+	private void OnMove(InputValue value) {
+		movementInput = value.Get<Vector2>();
+	}
+
+
 }
