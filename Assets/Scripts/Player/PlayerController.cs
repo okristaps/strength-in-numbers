@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Start() {
 		rb = GetComponent<Rigidbody2D>();
-
+		_weaponSelect = GetComponent<WeaponSelect>();
 		_shoot = GetComponent<Shoot>();
 
 	}
