@@ -417,7 +417,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8608144620199724450, guid: abea192aa80677c41b2faf21c6c9f369, type: 3}
   m_PrefabInstance: {fileID: 309593378}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1599364578
+--- !u!1001 &1508811467
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -467,10 +467,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3997415124421047830, guid: d331b171d7d26624cad105303bcca369, type: 3}
       propertyPath: m_Name
-      value: Grid
+      value: Grid_V0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 9129512499203494701, guid: d331b171d7d26624cad105303bcca369, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -590,5 +589,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 983540287}
   - {fileID: 113774983}
-  - {fileID: 1599364578}
   - {fileID: 309593378}
+  - {fileID: 1508811467}
