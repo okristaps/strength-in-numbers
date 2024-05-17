@@ -21,14 +21,15 @@ public class Movement : MonoBehaviour {
 	private void FixedUpdate() {
 		if (movementInput != Vector2.zero) {
 
-			Vector2 movement = movementInput * moveSpeed * Time.fixedDeltaTime;
 
 
-			int count = rb.Cast(movement, movementFilter, castCollisions, movement.magnitude + collisionOffset);
 
+
+			int count = rb.Cast(movementInput, movementFilter, castCollisions, moveSpeed * Time.fixedDeltaTime + collisionOffset);
+			Debug.Log(count);
 
 			if (count == 0) {
-				rb.MovePosition(rb.position + movement);
+				rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime);
 			}
 		}
 

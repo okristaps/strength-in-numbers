@@ -11,7 +11,9 @@ public class WeaponSelect : MonoBehaviour {
 
 	public void Start() {
 		currentWeaponIndex = 0;
-		GetComponent<SpriteRenderer>().sprite = weaponSprites[currentWeaponIndex];
+		if (GetComponent<SpriteRenderer>().sprite != null) {
+			GetComponent<SpriteRenderer>().sprite = weaponSprites[currentWeaponIndex];
+		}
 	}
 
 	private void Update() {
@@ -39,10 +41,9 @@ public class WeaponSelect : MonoBehaviour {
 
 	void ChangeWeapon(int weaponIndex) {
 		weaponIndex = Mathf.Clamp(weaponIndex, 0, weaponSprites.Length - 1);
-
 		previousWeaponIndex = currentWeaponIndex;
 		currentWeaponIndex = weaponIndex;
-		GetComponent<SpriteRenderer>().sprite = weaponSprites[currentWeaponIndex];
+
 	}
 
 	void ChangeToPreviousWeapon() {
