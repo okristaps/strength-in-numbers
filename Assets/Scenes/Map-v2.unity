@@ -33055,7 +33055,7 @@ GameObject:
   - component: {fileID: 1048061853}
   - component: {fileID: 1048061855}
   m_Layer: 0
-  m_Name: Props (Collition)
+  m_Name: Props (Collision)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33456,8 +33456,8 @@ Tilemap:
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -25, y: -7, z: 0}
-  m_Size: {x: 28, y: 12, z: 1}
+  m_Origin: {x: -30, y: -7, z: 0}
+  m_Size: {x: 33, y: 12, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
