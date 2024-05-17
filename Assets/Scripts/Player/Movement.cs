@@ -11,8 +11,8 @@ public class Movement : MonoBehaviour {
 
 
 
-	public float moveSpeed = 1f;
-	public float collisionOffset = 0.05f;
+	public float moveSpeed = 0.5f;
+	public float collisionOffset = 0.5f;
 
 	void Start() {
 		rb = GetComponent<Rigidbody2D>();
@@ -20,11 +20,6 @@ public class Movement : MonoBehaviour {
 
 	private void FixedUpdate() {
 		if (movementInput != Vector2.zero) {
-
-
-
-
-
 			int count = rb.Cast(movementInput, movementFilter, castCollisions, moveSpeed * Time.fixedDeltaTime + collisionOffset);
 			Debug.Log(count);
 
@@ -37,6 +32,10 @@ public class Movement : MonoBehaviour {
 		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		transform.up = mousePos - new Vector2(transform.position.x, transform.position.y);
 	}
+
+
+
+
 
 	private void OnMove(InputValue value) {
 		movementInput = value.Get<Vector2>();
