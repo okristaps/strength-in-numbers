@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Gunpoint
+  - RunePuzzle
+  - AnswerRune
+  - Rune
   layers:
   - Default
   - TransparentFX
