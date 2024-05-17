@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour {
 
 
 
-	private Movement _movement;
+
 
 
 	[SerializeField]
@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour {
 		rb = GetComponent<Rigidbody2D>();
 
 		_shoot = GetComponent<Shoot>();
-		_movement = GetComponent<Movement>();
+
 	}
 
 	void Update() {
