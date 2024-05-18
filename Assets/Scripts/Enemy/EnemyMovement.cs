@@ -12,9 +12,6 @@ public class EnemyMovement : MonoBehaviour {
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody2D>();
         _playerAwarenessController = FindObjectOfType<PlayerAwarenessController>();
-        if (_playerAwarenessController == null) {
-            Debug.LogError("PlayerAwarenessController not found. Ensure it exists in the scene.");
-        }
     }
 
     private void FixedUpdate() {
