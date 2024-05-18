@@ -6,7 +6,8 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 	[SerializeField]
 	private GameObject _bulletTrail;
 
@@ -22,14 +23,16 @@ public class PlayerController : MonoBehaviour {
 
 	public int currentWeaponIndex = 0;
 
-	void Start() {
+	void Start()
+	{
 
 		_weaponSelect = GetComponent<WeaponSelect>();
 		_shoot = GetComponent<Shoot>();
 
 	}
 
-	void Update() {
+	void Update()
+	{
 		_shoot.HandleShooting();
 		currentWeaponIndex = _weaponSelect.currentWeaponIndex;
 	}
@@ -37,6 +40,7 @@ public class PlayerController : MonoBehaviour {
 
 }
 
-public interface IHittable {
+public interface IHittable
+{
 	void Hit();
 }
