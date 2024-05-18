@@ -148,6 +148,14 @@ PrefabInstance:
       propertyPath: ammoText
       value: 
       objectReference: {fileID: 847373285}
+    - target: {fileID: 4193979415744527751, guid: 6273a7765a1ff8043afe504b1db51878, type: 3}
+      propertyPath: m_SleepingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193979415744527751, guid: 6273a7765a1ff8043afe504b1db51878, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4245819086833866769, guid: 6273a7765a1ff8043afe504b1db51878, type: 3}
       propertyPath: m_Enabled
       value: 1

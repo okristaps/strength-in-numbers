@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8721185915135347357}
-  - component: {fileID: 8118818160977971036}
   m_Layer: 0
   m_Name: Enemy_V5_AI
   m_TagString: Enemy
@@ -33,19 +32,6 @@ Transform:
   - {fileID: 6328955195555218240}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8118818160977971036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5005713583379069171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de651d3040da09f41907b5ec9fd7076b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerAwarenessDistance: 5
 --- !u!1 &5846229774782093201
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,3 +231,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb48da1b0f6b9149b87901360cf4f0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0

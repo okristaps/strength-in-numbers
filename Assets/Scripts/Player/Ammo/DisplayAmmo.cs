@@ -15,9 +15,14 @@ public class DisplayAmmo : MonoBehaviour {
 	[SerializeField]
 	TextMeshProUGUI ammoText;
 
+	[SerializeField]
+	TextMeshProUGUI hpText;
+
+
 	void Start() {
 		_ammo = GetComponent<Ammo>();
 		_weaponSelect = GetComponent<WeaponSelect>();
+
 	}
 
 	private void Update() {
@@ -29,10 +34,15 @@ public class DisplayAmmo : MonoBehaviour {
 		// If doesnt work check if you have added ammo text from ammo canvas to the DisplayAmmo script	
 		ammoLeft = _ammo.reserveAmmo[_weaponSelect.currentWeaponIndex];
 		ammoInMagazine = _ammo.bulletsInMag[_weaponSelect.currentWeaponIndex];
+
+
 	}
 
 	public void UpdateAmmoText() {
 		ammoText.text = ammoInMagazine.ToString() + " / " + ammoLeft.ToString();
+
+		hpText.text = "HP: " + GetComponent<PlayerController>().health.ToString();
+		Debug.Log("HP: " + hpText.text);
 	}
 
 }

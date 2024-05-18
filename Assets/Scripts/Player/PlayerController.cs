@@ -14,13 +14,15 @@ public class PlayerController : MonoBehaviour {
 
 	public ContactFilter2D movementFilter;
 
-
+	public double health = 100;
 
 
 	[SerializeField]
 	public Shoot _shoot;
 
 	public int currentWeaponIndex = 0;
+
+
 
 	void Start() {
 
@@ -30,12 +32,30 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Update() {
+		Debug.Log("health " + health);
 		_shoot.HandleShooting();
 		currentWeaponIndex = _weaponSelect.currentWeaponIndex;
 	}
 
 
+	void OnCollisionEnter(Collision col) {
+		Debug.Log("Collision with " + col.gameObject.name);
+	}
+
+	public void TakeDamage(double amount) {
+		health -= amount;
+		if (health <= 0) {
+			// top the game 
+			//
+			Destroy(gameObject);
+		}
+	}
+
 }
+
+
+
+
 
 public interface IHittable {
 	void Hit();
