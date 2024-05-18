@@ -101,7 +101,7 @@ public class Ammo : MonoBehaviour {
 		StartCoroutine(
 			ReloadCoroutine(() => {
 				int magazineSize = magSizes[cwIndex];
-				int cwBulletsInMagazine = bulletsInMag[cwIndex]; ;
+				int cwBulletsInMagazine = bulletsInMag[cwIndex];
 				int bulletsToReload = Mathf.Max(0, magazineSize - cwBulletsInMagazine);
 
 				// calc available ammo for reloading from current reserve
