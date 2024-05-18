@@ -7,6 +7,7 @@ public class Ammo : MonoBehaviour {
 	private WeaponSelect _weaponSelect;
 
 	private DisplayAmmo _displayAmmo;
+	public int grenadeCount;
 
 
 	// bullets in magazine
