@@ -14,9 +14,7 @@ public class PlayerAwarenessController : MonoBehaviour {
 
     private void Awake() {
         _player = GameObject.FindGameObjectWithTag("Player").transform;
-        if (_player == null) {
-            Debug.LogError("Player not found. Please ensure the player is tagged 'Player'.");
-        }
+
     }
 
     void Update() {
@@ -25,12 +23,6 @@ public class PlayerAwarenessController : MonoBehaviour {
             DirectionToPlayer = enemyToPlayerVector.normalized;
             PlayerLocation = _player.position;
 
-            // if (enemyToPlayerVector.magnitude <= _playerAwarenessDistance) {
-            //     AwareOfPlayer = true;
-            // }
-            // else {
-            //     AwareOfPlayer = false;
-            // }
 
             AwareOfPlayer = true;
         }

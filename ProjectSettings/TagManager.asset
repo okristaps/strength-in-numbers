@@ -8,6 +8,7 @@ TagManager:
   - RunePuzzle
   - AnswerRune
   - Rune
+  - Enemy
   layers:
   - Default
   - TransparentFX

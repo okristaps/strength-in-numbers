@@ -34,6 +34,8 @@ public class Shoot : MonoBehaviour {
 		while (isShooting && _ammo.bulletsInMag[cwIndex] > 0) {
 			HandleBulletShot();
 
+			// shoot bullet
+
 			// apply bullet damage
 			// applydmg(cwBulletDamage);
 
@@ -81,6 +83,7 @@ public class Shoot : MonoBehaviour {
 	}
 
 	private void HandleBulletShot() {
+
 		_ammo.DeductBullet();
 		_raycastShooter.HandleRayCast();
 	}
