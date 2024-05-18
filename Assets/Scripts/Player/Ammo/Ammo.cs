@@ -44,11 +44,11 @@ public class Ammo : MonoBehaviour {
 	// 1 bullet damage points
 	public Dictionary<int, int> weaponDamages = new Dictionary<int, int>
 {
-		{ 0, 25 },
-		{ 1, 70 },
-		{ 2, 25 },
+		{ 0, 34 },
+		{ 1, 100 },
+		{ 2, 34 },
 		{ 3, 100 },
-		{ 4, 25 }
+		{ 4, 30 }
 	};
 
 
@@ -64,12 +64,23 @@ public class Ammo : MonoBehaviour {
 
 	public Dictionary<int, float> reloadTimes = new Dictionary<int, float>
 {
-		{ 0, 0.5f },
-		{ 1, 1f },
-		{ 2, 0.8f },
-		{ 3, 2f },
+		{ 0, 5f },
+		{ 1, 5f },
+		{ 2, 6f },
+		{ 3, 10f },
+		{ 4, 7f }
+	};
+
+
+	public Dictionary<int, float> weaponRanges = new Dictionary<int, float>
+{
+		{ 0, 1f },
+		{ 1, 2f },
+		{ 2, 3f },
+		{ 3, 4f },
 		{ 4, 5f }
 	};
+
 
 
 	// weapon ammo handle stuff

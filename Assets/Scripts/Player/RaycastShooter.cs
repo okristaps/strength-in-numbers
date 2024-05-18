@@ -4,6 +4,9 @@ public class RaycastShooter : MonoBehaviour {
 	[SerializeField]
 	private GameObject _bulletTrail;
 
+	private WeaponSelect _weaponSelect;
+	private Ammo _ammo;
+
 
 
 	[SerializeField]
@@ -13,15 +16,20 @@ public class RaycastShooter : MonoBehaviour {
 	private Animator _muzzleFlashAnimator;
 
 
+	void Start() {
+		_weaponSelect = GetComponent<WeaponSelect>();
+		_ammo = GetComponent<Ammo>();
+	}
+
 	public void HandleRayCast() {
 
 		_muzzleFlashAnimator.SetTrigger("Shoot");
 
-		float maxDistance = 10f;
+
 
 		Debug.Log("Shooting");
 
-		RaycastHit2D hit = Physics2D.Raycast(_gunPoint.position, transform.up, maxDistance);
+		RaycastHit2D hit = Physics2D.Raycast(_gunPoint.position, transform.up, _ammo.weaponRanges[_weaponSelect.currentWeaponIndex]);
 
 		var trail = Instantiate(_bulletTrail, _gunPoint.position, transform.rotation);
 
@@ -35,14 +43,17 @@ public class RaycastShooter : MonoBehaviour {
 			Debug.Log(hit.collider.gameObject.tag);
 			if (hit.collider.gameObject.tag == "Enemy") {
 				Debug.Log("Hit enemy");
+
 				// Call a function specific to hitting an enemy
-				hit.collider.gameObject.GetComponent<EnemyHealth>().TakeDamage(50);
+				hit.collider.gameObject.GetComponent<EnemyHealth>().TakeDamage(
+					_ammo.weaponDamages[_weaponSelect.currentWeaponIndex]
+				);
 			}
 		}
 		else {
 
 			Debug.Log("Missed??");
-			var endPosition = _gunPoint.position + transform.up * maxDistance;
+			var endPosition = _gunPoint.position + transform.up * _ammo.weaponRanges[_weaponSelect.currentWeaponIndex];
 			trailScript.SetTargetPosition(endPosition);
 		}
 	}

@@ -45,8 +45,6 @@ public class PlayerController : MonoBehaviour {
 	public void TakeDamage(double amount) {
 		health -= amount;
 		if (health <= 0) {
-			// top the game 
-			//
 			Destroy(gameObject);
 		}
 	}
