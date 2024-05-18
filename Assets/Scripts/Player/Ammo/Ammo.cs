@@ -7,7 +7,7 @@ public class Ammo : MonoBehaviour {
 	private WeaponSelect _weaponSelect;
 
 	private DisplayAmmo _displayAmmo;
-	public int grenadeCount;
+	public int grenadeCount = 10;
 
 
 	// bullets in magazine
@@ -35,9 +35,9 @@ public class Ammo : MonoBehaviour {
 	public Dictionary<int, int> reserveAmmo = new Dictionary<int, int>
 	{
 		{ 0, 100 },
-		{ 1, 36 },
-		{ 2, 60 },
-		{ 3, 50 },
+		{ 1, 5000 },
+		{ 2, 5000 },
+		{ 3, 5000 },
 		{ 4, 5000 }
 	};
 
@@ -48,7 +48,7 @@ public class Ammo : MonoBehaviour {
 		{ 1, 100 },
 		{ 2, 34 },
 		{ 3, 100 },
-		{ 4, 30 }
+		{ 4, 50 }
 	};
 
 
@@ -57,9 +57,9 @@ public class Ammo : MonoBehaviour {
 {
 		{ 0, 200 },
 		{ 1, 100 },
-		{ 2, 10000 },
-		{ 3, 60 },
-		{ 4, 10000 }
+		{ 2, 300 },
+		{ 3, 100 },
+		{ 4, 500 }
 	};
 
 	public Dictionary<int, float> reloadTimes = new Dictionary<int, float>
