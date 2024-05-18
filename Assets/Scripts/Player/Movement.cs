@@ -23,6 +23,10 @@ public class Movement : MonoBehaviour {
 			if (count == 0) {
 				rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime);
 			}
+			else if (count > 0 && castCollisions[0].collider.gameObject.tag == "Enemy") {
+				Debug.Log("Collided with enemy");
+				rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime);
+			}
 		}
 
 		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
