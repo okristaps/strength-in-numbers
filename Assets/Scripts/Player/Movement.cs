@@ -24,8 +24,15 @@ public class Movement : MonoBehaviour {
 				rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime);
 			}
 			else if (count > 0 && castCollisions[0].collider.gameObject.tag == "Enemy") {
-				Debug.Log("Collided with enemy");
-				rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime);
+				Debug.Log("Collided with enemy moving");
+				rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime / 3);
+			}
+		}
+		else {
+			if (castCollisions.Count > 0) {
+				if (castCollisions[0].collider.gameObject.tag == "Enemy") {
+					Debug.Log("Collided with enemy while not moving");
+				}
 			}
 		}
 
