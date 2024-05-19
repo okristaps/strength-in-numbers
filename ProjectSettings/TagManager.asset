@@ -20,6 +20,7 @@ TagManager:
   - RifleAmmo
   - Grenade
   - Doors
+  - Grenade_Throw
   layers:
   - Default
   - TransparentFX
