@@ -295,9 +295,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
---- !u!1001 &208630938
-=======
 --- !u!4 &125842555 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 672403742879059398, guid: d331b171d7d26624cad105303bcca369, type: 3}
@@ -309,7 +306,6 @@ RectTransform:
   m_PrefabInstance: {fileID: 2118124880}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &309593378
->>>>>>> 5e4e638 (add outside, blood, vending machine)
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2

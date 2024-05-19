@@ -19,6 +19,9 @@ TagManager:
   - ShotgunAmmo
   - RifleAmmo
   - Grenade
+  - Doors
+  - Grenade_Throw
+  - PuzzleElement
   layers:
   - Default
   - TransparentFX
@@ -55,4 +58,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 1497016779
     locked: 0

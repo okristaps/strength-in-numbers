@@ -34,12 +34,12 @@ public class Ammo : MonoBehaviour {
 	// ammo in reserve
 	public Dictionary<int, int> reserveAmmo = new Dictionary<int, int>
 	{
-		
-		{ 0,60 },
-		{ 1, 36 },
-		{ 2, 60 },
-		{ 3, 50 },
-		{ 4, 5000 }
+
+		{ 0, 300 },
+		{ 1, 100 },
+		{ 2, 1000 },
+		{ 3, 100 },
+		{ 4, 500 }
 	};
 
 	// 1 bullet damage points
@@ -100,7 +100,7 @@ public class Ammo : MonoBehaviour {
 		}
 		cwIndex = _weaponSelect.currentWeaponIndex;
 		_displayAmmo.UpdateAmmoText();
-		
+
 	}
 
 
@@ -141,6 +141,12 @@ public class Ammo : MonoBehaviour {
 		isReloading = false;
 	}
 
+
+	public void DeductGrenade() {
+		grenadeCount--;
+		Debug.Log("Grenade count: " + grenadeCount);
+
+	}
 
 	public void DeductBullet() {
 		bulletsInMag[cwIndex]--;
