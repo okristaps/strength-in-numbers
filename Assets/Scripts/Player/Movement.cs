@@ -37,7 +37,9 @@ public class Movement : MonoBehaviour {
 
 			if (castCollisions[0].collider.gameObject.tag == "PistolAmmo"
 			|| castCollisions[0].collider.gameObject.tag == "ShotgunAmmo" || castCollisions[0].collider.gameObject.tag == "RifleAmmo" || castCollisions[0].collider.gameObject.tag == "GrenadeAmmo" || castCollisions[0].collider.gameObject.tag == "HealthPack"
-			|| castCollisions[0].collider.gameObject.tag == "Grenade_Throw") {
+			|| castCollisions[0].collider.gameObject.tag == "Grenade_Throw"
+			|| castCollisions[0].collider.gameObject.tag == "Grenade"
+			) {
 
 				{
 					rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime);
