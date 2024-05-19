@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 public class Ammo : MonoBehaviour {
@@ -20,7 +21,6 @@ public class Ammo : MonoBehaviour {
 		{ 4, 2000 }
 	};
 
-
 	// magazine size
 	public Dictionary<int, int> magSizes = new Dictionary<int, int>
 	{
@@ -34,10 +34,11 @@ public class Ammo : MonoBehaviour {
 	// ammo in reserve
 	public Dictionary<int, int> reserveAmmo = new Dictionary<int, int>
 	{
-		{ 0, 100 },
-		{ 1, 5000 },
-		{ 2, 5000 },
-		{ 3, 5000 },
+		
+		{ 0,60 },
+		{ 1, 36 },
+		{ 2, 60 },
+		{ 3, 50 },
 		{ 4, 5000 }
 	};
 
@@ -99,6 +100,7 @@ public class Ammo : MonoBehaviour {
 		}
 		cwIndex = _weaponSelect.currentWeaponIndex;
 		_displayAmmo.UpdateAmmoText();
+		
 	}
 
 

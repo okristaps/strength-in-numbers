@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class DisplayAmmo : MonoBehaviour {
 	private Ammo _ammo;
-
 	int ammoLeft = 0;
 
 	int ammoInMagazine = 0;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponSelect : MonoBehaviour {
@@ -9,16 +10,21 @@ public class WeaponSelect : MonoBehaviour {
 
 	public int previousWeaponIndex = 0;
 
-	public void Start() {
-		currentWeaponIndex = 0;
-		GetComponent<SpriteRenderer>().sprite = weaponSprites[currentWeaponIndex];
+	public void Start()
+	{
+
 	}
 
-	private void Update() {
-		for (int i = 0; i < weaponSprites.Length; i++) {
-			if (Input.GetKeyDown(KeyCode.Alpha1 + i)) {
-				ChangeWeapon(i);
-				break;
+	private void Update()
+	{
+		for (int i = 0; i < weaponSprites.Length; i++)
+		{
+			if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+			{
+				if (i != currentWeaponIndex) {
+					ChangeWeapon(i);
+					break;
+				}			
 			}
 		}
 
@@ -44,11 +50,16 @@ public class WeaponSelect : MonoBehaviour {
 		GetComponent<SpriteRenderer>().sprite = weaponSprites[currentWeaponIndex];
 	}
 
-	void ChangeToPreviousWeapon() {
-		int temp = currentWeaponIndex;
-		currentWeaponIndex = previousWeaponIndex;
-		previousWeaponIndex = temp;
+	void ChangeToPreviousWeapon()
+	{	
+		
+			if (previousWeaponIndex >= 0) {
 
-		GetComponent<SpriteRenderer>().sprite = weaponSprites[currentWeaponIndex];
+				int temp = currentWeaponIndex;
+				currentWeaponIndex = previousWeaponIndex;
+				previousWeaponIndex = temp;
+				GetComponent<SpriteRenderer>().sprite = weaponSprites[currentWeaponIndex];
+			} 		
+		
 	}
 }
