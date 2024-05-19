@@ -19,6 +19,7 @@ TagManager:
   - ShotgunAmmo
   - RifleAmmo
   - Grenade
+  - Doors
   layers:
   - Default
   - TransparentFX
