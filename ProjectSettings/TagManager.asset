@@ -10,6 +10,15 @@ TagManager:
   - Rune
   - Enemy
   - Walls
+  - Sniper
+  - Machinegun
+  - AK47
+  - PistolAmmo
+  - Shotgun
+  - Pistol
+  - ShotgunAmmo
+  - RifleAmmo
+  - Grenade
   layers:
   - Default
   - TransparentFX
