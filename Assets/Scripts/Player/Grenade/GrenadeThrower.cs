@@ -5,9 +5,12 @@ public class GrenadeThrower : MonoBehaviour {
     [SerializeField] private GameObject grenadePrefab;
     [SerializeField] private Transform _gunPoint;
     [SerializeField] public GameObject explosion;
+
+    private Ammo _ammo;
     private float throwSpeed = 5f;
 
     void Start() {
+        _ammo = GetComponent<Ammo>();
         if (_gunPoint == null) {
             _gunPoint = GetComponent<Transform>();
         }
@@ -24,6 +27,8 @@ public class GrenadeThrower : MonoBehaviour {
             Destroy(grenade);
             return;
         }
+
+        _ammo.DeductGrenade();
 
         Vector2 forwardDirection = Quaternion.Euler(0, 0, 90) * transform.right;
         grenadeRb.velocity = forwardDirection * throwSpeed;

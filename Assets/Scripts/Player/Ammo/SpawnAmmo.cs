@@ -10,14 +10,17 @@ public class SpawnAmmo : MonoBehaviour {
 
     private GameObject ShotgunAmmo;
 
+    private GameObject GrenadeAmmo;
+
     [SerializeField]
     [Range(0f, 1f)]
     private float spawnProbability = 0.3f;
     void Start() {
-
         PistolAmmo = GameObject.FindGameObjectWithTag("PistolAmmo");
         RifleAmmo = GameObject.FindGameObjectWithTag("RifleAmmo");
         ShotgunAmmo = GameObject.FindGameObjectWithTag("ShotgunAmmo");
+        GrenadeAmmo = GameObject.FindGameObjectWithTag("Grenade");
+
     }
 
     void Update() {
@@ -42,8 +45,11 @@ public class SpawnAmmo : MonoBehaviour {
         else if (randomValue < 0.7f) {
             return RifleAmmo;
         }
-        else {
+        else if (randomValue < 0.9f) {
             return ShotgunAmmo;
+        }
+        else {
+            return GrenadeAmmo;
         }
     }
 }
