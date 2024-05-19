@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class RuneManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class RuneManager : MonoBehaviour
     public GameObject panel;
     private Dictionary<string, bool> placementStatus = new Dictionary<string, bool>();
     public TextMeshProUGUI completionText;
+    public GameObject endScreenPanel;
     private void Awake()
     {
         if (Instance == null)
@@ -86,6 +88,7 @@ public class RuneManager : MonoBehaviour
         }
 
         StartCoroutine(ClosePanelAfterDelay(2f));
+        endScreenPanel.SetActive(true);
     }
 
     private IEnumerator ClosePanelAfterDelay(float delay)
@@ -93,8 +96,6 @@ public class RuneManager : MonoBehaviour
         ShowMessage(correctText, "The Door is now open", delay);
         yield return new WaitForSeconds(delay);
         panel.SetActive(!panel.activeSelf);
-
-        //TODO: Implement door opening after puzzle completed
     }
 
     private IEnumerator ShowMessage(TextMeshProUGUI textElement, string message, float duration)
@@ -103,5 +104,16 @@ public class RuneManager : MonoBehaviour
         textElement.gameObject.SetActive(true);
         yield return new WaitForSeconds(duration);
         textElement.gameObject.SetActive(false);
+    }
+
+    public void ContinueGame()
+    {
+        endScreenPanel.SetActive(false);
+    }
+
+    public void RestartGame()
+    {
+        endScreenPanel.SetActive(false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  // Reload the current scene
     }
 }
