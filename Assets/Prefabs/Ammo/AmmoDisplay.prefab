@@ -289,7 +289,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &816944068160010340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,6 +320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoText: {fileID: 6149853896870022122}
+  hpText: {fileID: 0}
 --- !u!114 &1789693022013963174
 MonoBehaviour:
   m_ObjectHideFlags: 0
