@@ -1,40 +1,31 @@
 using UnityEngine;
-using System.Collections;
 
 public class GrenadeThrower : MonoBehaviour {
     [SerializeField] private GameObject grenadePrefab;
     [SerializeField] private Transform _gunPoint;
     private float throwSpeed = 5f;
 
-
     void Start() {
-        _gunPoint = GetComponent<Transform>();
+        if (_gunPoint == null) {
+            _gunPoint = GetComponent<Transform>();
+        }
     }
 
     public void ThrowGrenade() {
         Vector3 spawnPosition = _gunPoint.position;
         GameObject grenade = Instantiate(grenadePrefab, spawnPosition, Quaternion.identity);
 
-        // since player is facing up, we need to rotate the forward direction by 90 degrees
-        Vector3 forwardDirection = Quaternion.Euler(0, 0, 90) * transform.right;
-        StartCoroutine(MoveGrenadeForward(grenade, forwardDirection));
-    }
-
-    private IEnumerator MoveGrenadeForward(GameObject grenade, Vector3 direction) {
-        float elapsedTime = 0f;
-        while (elapsedTime < 1f) {
-
-
-            grenade.transform.position += direction * throwSpeed * Time.deltaTime;
-            elapsedTime += Time.deltaTime;
-            yield return null;
+        Rigidbody2D grenadeRb = grenade.GetComponent<Rigidbody2D>();
+        if (grenadeRb == null) {
+            Debug.LogError("Grenade prefab is missing a Rigidbody2D component.");
+            Destroy(grenade);
+            return;
         }
-        Destroy(grenade);
+
+        Vector2 forwardDirection = Quaternion.Euler(0, 0, 90) * transform.right;
+        grenadeRb.velocity = forwardDirection * throwSpeed;
+
+        // Schedule the grenade to be destroyed after 2 seconds
+        Destroy(grenade, 2f);
     }
-
-    public void OnCollisionEnter(Collision collision) {
-        Debug.Log("Collision entered");
-    }
-
-
 }
