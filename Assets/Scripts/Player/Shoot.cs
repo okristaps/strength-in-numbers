@@ -10,6 +10,8 @@ public class Shoot : MonoBehaviour {
 	private Ammo _ammo;
 	public RaycastShooter _raycastShooter;
 
+	private GrenadeThrower _grenadeThrower;
+
 	// shooting state
 	private bool isShooting = false;
 	private int cwIndex;
@@ -20,10 +22,12 @@ public class Shoot : MonoBehaviour {
 		_raycastShooter = GetComponent<RaycastShooter>();
 		_ammo = GetComponent<Ammo>();
 
+		_grenadeThrower = GetComponent<GrenadeThrower>();
 	}
 
 	void Update() {
 		cwIndex = _weaponSelect.currentWeaponIndex;
+
 	}
 
 	private IEnumerator AutoShoot() {
@@ -76,6 +80,7 @@ public class Shoot : MonoBehaviour {
 				_ammo.ReloadWeapon();
 			}
 		}
+
 
 		if (!Input.GetMouseButton(0)) {
 			isShooting = false;

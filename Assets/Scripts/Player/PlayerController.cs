@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour {
 
 	public double health = 100;
 
+	private GrenadeThrower _grenadeThrower;
+
 
 	[SerializeField]
 	public Shoot _shoot;
@@ -28,19 +30,25 @@ public class PlayerController : MonoBehaviour {
 
 		_weaponSelect = GetComponent<WeaponSelect>();
 		_shoot = GetComponent<Shoot>();
+		_grenadeThrower = GetComponent<GrenadeThrower>();
 
 	}
 
 	void Update() {
-		Debug.Log("health " + health);
+
 		_shoot.HandleShooting();
 		currentWeaponIndex = _weaponSelect.currentWeaponIndex;
+
+
+		if (Input.GetMouseButtonDown(1)) {
+			Debug.Log("Right Clicked");
+			_grenadeThrower.ThrowGrenade();
+		}
+
 	}
 
 
-	void OnCollisionEnter(Collision col) {
-		Debug.Log("Collision with " + col.gameObject.name);
-	}
+
 
 	public void TakeDamage(double amount) {
 		health -= amount;
