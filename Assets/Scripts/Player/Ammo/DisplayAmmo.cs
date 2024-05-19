@@ -38,10 +38,10 @@ public class DisplayAmmo : MonoBehaviour {
 	}
 
 	public void UpdateAmmoText() {
-		ammoText.text = ammoInMagazine.ToString() + " / " + ammoLeft.ToString();
+		//ammoText.text = ammoInMagazine.ToString() + " / " + ammoLeft.ToString();
 
-		hpText.text = "HP: " + GetComponent<PlayerController>().health.ToString();
-		Debug.Log("HP: " + hpText.text);
+		//hpText.text = GetComponent<PlayerController>().health.ToString();
+		
 	}
 
 }

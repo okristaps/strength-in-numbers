@@ -32,14 +32,14 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Update() {
-		Debug.Log("health " + health);
+	
 		_shoot.HandleShooting();
 		currentWeaponIndex = _weaponSelect.currentWeaponIndex;
 	}
 
 
 	void OnCollisionEnter(Collision col) {
-		Debug.Log("Collision with " + col.gameObject.name);
+		
 	}
 
 	public void TakeDamage(double amount) {
