@@ -15,6 +15,16 @@ public class RuneManager : MonoBehaviour
     private Dictionary<string, bool> placementStatus = new Dictionary<string, bool>();
     public TextMeshProUGUI completionText;
     public GameObject endScreenPanel;
+
+    void Update()
+    {
+        // Check if the Escape key is pressed
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ToggleGameOptionsPanel();
+        }
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -115,5 +125,11 @@ public class RuneManager : MonoBehaviour
     {
         endScreenPanel.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);  // Reload the current scene
+    }
+
+    public void ToggleGameOptionsPanel()
+    {
+        // Toggle the visibility of the game options panel
+        endScreenPanel.SetActive(!endScreenPanel.activeSelf);
     }
 }
