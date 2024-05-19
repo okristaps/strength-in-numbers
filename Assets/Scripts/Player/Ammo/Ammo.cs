@@ -64,21 +64,21 @@ public class Ammo : MonoBehaviour {
 
 	public Dictionary<int, float> reloadTimes = new Dictionary<int, float>
 {
-		{ 0, 5f },
-		{ 1, 5f },
-		{ 2, 6f },
-		{ 3, 10f },
-		{ 4, 7f }
+		{ 0, 0.5f },
+		{ 1, 0.7f },
+		{ 2, 0.7f },
+		{ 3, 1f },
+		{ 4, 1.5f }
 	};
 
 
 	public Dictionary<int, float> weaponRanges = new Dictionary<int, float>
 {
-		{ 0, 1f },
-		{ 1, 2f },
-		{ 2, 3f },
-		{ 3, 4f },
-		{ 4, 5f }
+		{ 0, 4f },
+		{ 1, 4f },
+		{ 2, 6f },
+		{ 3, 10f },
+		{ 4, 7f }
 	};
 
 
