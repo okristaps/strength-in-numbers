@@ -36,19 +36,20 @@ public class Movement : MonoBehaviour {
 			}
 
 			if (castCollisions[0].collider.gameObject.tag == "PistolAmmo"
-			|| castCollisions[0].collider.gameObject.tag == "ShotgunAmmo" || castCollisions[0].collider.gameObject.tag == "RifleAmmo" || castCollisions[0].collider.gameObject.tag == "GrenadeAmmo" || castCollisions[0].collider.gameObject.tag == "HealthPack") {
-				rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime);
+			|| castCollisions[0].collider.gameObject.tag == "ShotgunAmmo" || castCollisions[0].collider.gameObject.tag == "RifleAmmo" || castCollisions[0].collider.gameObject.tag == "GrenadeAmmo" || castCollisions[0].collider.gameObject.tag == "HealthPack"
+			|| castCollisions[0].collider.gameObject.tag == "Grenade_Throw") {
+
+				{
+					rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime);
+				}
 			}
-		}
 
-		if (castCollisions[0].collider.gameObject.tag == "Enemy") {
-			player.TakeDamage(0.1);
-		}
+			if (castCollisions[0].collider.gameObject.tag == "Enemy") {
+				player.TakeDamage(0.1);
+			}
 
+		}
 	}
-
-
-
 
 	private void OnMove(InputValue value) {
 		movementInput = value.Get<Vector2>();

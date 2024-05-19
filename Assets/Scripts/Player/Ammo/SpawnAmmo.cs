@@ -25,16 +25,12 @@ public class SpawnAmmo : MonoBehaviour {
     }
 
     public void SpawnTrigger(Vector3 enemyPosition) {
-        Debug.Log("Enemy position at death: " + enemyPosition);
 
         if (Random.value <= spawnProbability) {
-            Debug.Log("Spawning ammo");
             GameObject ammoToSpawn = GetRandomAmmo();
             Instantiate(ammoToSpawn, enemyPosition, Quaternion.identity);
         }
-        else {
-            Debug.Log("No ammo spawned this time.");
-        }
+
     }
 
     private GameObject GetRandomAmmo() {
