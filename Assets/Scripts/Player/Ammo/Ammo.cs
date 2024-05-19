@@ -35,11 +35,11 @@ public class Ammo : MonoBehaviour {
 	public Dictionary<int, int> reserveAmmo = new Dictionary<int, int>
 	{
 
-		{ 0,60 },
-		{ 1, 36 },
-		{ 2, 60 },
-		{ 3, 50 },
-		{ 4, 5000 }
+		{ 0, 300 },
+		{ 1, 100 },
+		{ 2, 1000 },
+		{ 3, 100 },
+		{ 4, 500 }
 	};
 
 	// 1 bullet damage points
