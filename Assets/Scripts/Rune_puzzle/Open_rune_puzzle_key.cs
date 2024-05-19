@@ -6,32 +6,40 @@ using UnityEngine;
 public class Open_rune_puzzle_key : MonoBehaviour
 {
     public GameObject panel;
+    private bool isPlayerNearby = false;
 
-    private void OnMouseDown()
+    void Update()
     {
-        if (panel != null)
+        // Check if the player is nearby and if they press 'E'
+        Debug.Log(isPlayerNearby);
+        if (isPlayerNearby && Input.GetKeyDown(KeyCode.E))
         {
-            panel.SetActive(!panel.activeSelf);
-        }
-        else
-        {
-            Debug.Log("Panel reference is missing");
+            if (panel != null)
+            {
+                panel.SetActive(!panel.activeSelf);  // Toggle the visibility of the panel
+            }
+            else
+            {
+                Debug.Log("Panel reference is missing");
+            }
         }
     }
 
-    // This method TO BE used when player sprite has colliders
-    // void Update()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.E))
-    //     {
-    //         if (panel != null)
-    //         {
-    //             panel.SetActive(!panel.activeSelf);
-    //         }
-    //         else
-    //         {
-    //             Debug.Log("Panel reference is missing");
-    //         }
-    //     }
-    // }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("player inside the trigger");
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("triggered");
+            isPlayerNearby = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerNearby = false;
+        }
+    }
 }

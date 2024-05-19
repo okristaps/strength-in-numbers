@@ -12,6 +12,7 @@ public class RuneManager : MonoBehaviour
     public TextMeshProUGUI wrongText;
     public GameObject panel;
     private Dictionary<string, bool> placementStatus = new Dictionary<string, bool>();
+    public TextMeshProUGUI completionText;
     private void Awake()
     {
         if (Instance == null)
@@ -25,6 +26,11 @@ public class RuneManager : MonoBehaviour
         }
 
         InitializeTextElements();
+    }
+
+    public void FinishGame()
+    {
+        Application.Quit();
     }
 
     private void InitializeTextElements()

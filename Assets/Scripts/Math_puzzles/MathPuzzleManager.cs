@@ -15,16 +15,14 @@ public class MathPuzzleManager : MonoBehaviour {
 	public TextMeshProUGUI correctText;
 	public TextMeshProUGUI wrongText;
 
-	private void Start() {
-		// Hide the puzzle panels initially
-		//mathPuzzlePanel1.SetActive(false);
-		//mathPuzzlePanel2.SetActive(false);
+	public TilemapDoor[] doorToUnlock;
 
+	private void Start() {
 		// Hide the feedback texts initially
 		correctText.gameObject.SetActive(false);
 		wrongText.gameObject.SetActive(false);
 
-		// Add listeners to the buttons
+		// Add listeners to the butto
 		submitButton1.onClick.AddListener(CheckAnswer1);
 		submitButton2.onClick.AddListener(CheckAnswer2);
 	}
@@ -41,7 +39,8 @@ public class MathPuzzleManager : MonoBehaviour {
 		string answer = answerInputField1.text;
 		if (answer == "7") {
 			StartCoroutine(ShowFeedback(correctText, 2));
-			OpenDoor1();
+			mathPuzzlePanel1.SetActive(false);
+			doorToUnlock[0].UnlockDoor();
 		}
 		else {
 			StartCoroutine(ShowFeedback(wrongText, 2));
@@ -52,7 +51,8 @@ public class MathPuzzleManager : MonoBehaviour {
 		string answer = answerInputField2.text;
 		if (answer == "10") {
 			StartCoroutine(ShowFeedback(correctText, 2));
-			OpenDoor2();
+			mathPuzzlePanel2.SetActive(false);
+			doorToUnlock[1].UnlockDoor();
 		}
 		else {
 			StartCoroutine(ShowFeedback(wrongText, 2));
@@ -63,15 +63,5 @@ public class MathPuzzleManager : MonoBehaviour {
 		textElement.gameObject.SetActive(true);
 		yield return new WaitForSeconds(duration);
 		textElement.gameObject.SetActive(false);
-	}
-
-	private void OpenDoor1() {
-		// Placeholder method to open the door for puzzle 1
-		Debug.Log("Opening Door 1");
-	}
-
-	private void OpenDoor2() {
-		// Placeholder method to open the door for puzzle 2
-		Debug.Log("Opening Door 2");
 	}
 }

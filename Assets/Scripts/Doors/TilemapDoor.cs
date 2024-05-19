@@ -5,6 +5,8 @@ public class TilemapDoor : MonoBehaviour
 {
     private bool isPlayerNearby = false;
     private bool isOpen = false;
+    public bool isInitiallyLocked = false;
+    public bool isUnlocked = false;
     private Tilemap tilemap;
     private BoxCollider2D boxCollider;
     private BoundsInt doorBounds;
@@ -18,15 +20,20 @@ public class TilemapDoor : MonoBehaviour
         doorBounds = new BoundsInt(new Vector3Int(-1, -1, 0), new Vector3Int(3, 3, 1));
 
         doorTiles = tilemap.GetTilesBlock(doorBounds);
-
+        isUnlocked = !isInitiallyLocked;
     }
 
     void Update()
     {
-        if (isPlayerNearby && Input.GetKeyDown(KeyCode.E))
+        if (isPlayerNearby && Input.GetKeyDown(KeyCode.E) && isUnlocked)
         {
             ToggleDoor();
         }
+    }
+
+    public void UnlockDoor()
+    {
+        isUnlocked = true;
     }
 
     void ToggleDoor()
