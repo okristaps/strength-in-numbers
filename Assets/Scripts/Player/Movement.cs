@@ -27,7 +27,7 @@ public class Movement : MonoBehaviour {
 		transform.up = mousePos - (Vector2)transform.position;
 
 
-		string[] allowedTags = { "Enemy", "PistolAmmo", "ShotgunAmmo", "RifleAmmo", "GrenadeAmmo", "HealthPack", "Grenade_Throw", "Grenade" };
+		string[] allowedTags = { "Enemy", "PistolAmmo", "ShotgunAmmo", "RifleAmmo", "GrenadeAmmo", "HealthPack", "Grenade_Throw", "Grenade", "PuzzleElement" };
 
 		if (count > 0) {
 			string collidedTag = castCollisions[0].collider.gameObject.tag;

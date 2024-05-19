@@ -21,6 +21,7 @@ TagManager:
   - Grenade
   - Doors
   - Grenade_Throw
+  - PuzzleElement
   layers:
   - Default
   - TransparentFX
