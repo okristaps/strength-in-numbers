@@ -40,6 +40,9 @@ public class PlayerController : MonoBehaviour {
 		currentWeaponIndex = _weaponSelect.currentWeaponIndex;
 
 
+
+	void OnCollisionEnter(Collision col) {
+
 		if (Input.GetMouseButtonDown(1)) {
 			Debug.Log("Right Clicked");
 			_grenadeThrower.ThrowGrenade();

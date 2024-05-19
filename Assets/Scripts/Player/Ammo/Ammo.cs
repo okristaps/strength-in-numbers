@@ -14,11 +14,11 @@ public class Ammo : MonoBehaviour {
 	// bullets in magazine
 	public Dictionary<int, int> bulletsInMag = new Dictionary<int, int>
 	{
-		{ 0, 30 },
+		{ 0, 20 },
 		{ 1, 6 },
-		{ 2, 30 },
+		{ 2, 60 },
 		{ 3, 6 },
-		{ 4, 2000 }
+		{ 4, 500 }
 	};
 
 	// magazine size
