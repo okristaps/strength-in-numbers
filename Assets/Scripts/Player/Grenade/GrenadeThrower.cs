@@ -7,8 +7,6 @@ public class GrenadeThrower : MonoBehaviour {
     [SerializeField] public GameObject explosion;
 
 
-    private WeaponSelect _weaponSelect;
-    private int cwIndex;
     private Ammo _ammo;
     private float throwSpeed = 5f;
 
@@ -19,9 +17,7 @@ public class GrenadeThrower : MonoBehaviour {
         }
     }
 
-    void Update() {
-        cwIndex = _weaponSelect.currentWeaponIndex;
-    }
+
 
     public void ThrowGrenade() {
         if (_ammo.grenadeCount > 0) {
@@ -44,7 +40,7 @@ public class GrenadeThrower : MonoBehaviour {
             Vector2 forwardDirection = Quaternion.Euler(0, 0, 90) * transform.right;
             grenadeRb.velocity = forwardDirection * throwSpeed;
 
-            StartCoroutine(DestroyGrenadeAfterDelay(grenade, 2f));
+            StartCoroutine(DestroyGrenadeAfterDelay(grenade, 1f));
         }
     }
     private IEnumerator DestroyGrenadeAfterDelay(GameObject grenade, float delay) {
