@@ -2,15 +2,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Explostion : MonoBehaviour {
-
-
-
     public float radius = 5;
-
-    void Start() {
-
-
-    }
 
     private void Update() {
         Collider2D[] enemyHit = Physics2D.OverlapCircleAll(transform.position, 1f);
