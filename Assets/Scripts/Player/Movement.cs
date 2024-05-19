@@ -29,15 +29,21 @@ public class Movement : MonoBehaviour {
 		if (count == 0) {
 			rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime);
 		}
-		else if (count > 0 && castCollisions[0].collider.gameObject.tag == "Enemy") {
-			rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime / 3);
+		else if (count > 0) {
+			if (castCollisions[0].collider.gameObject.tag == "Enemy"
+			) {
+				rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime / 3);
+			}
+
+			if (castCollisions[0].collider.gameObject.tag == "PistolAmmo"
+			|| castCollisions[0].collider.gameObject.tag == "ShotgunAmmo" || castCollisions[0].collider.gameObject.tag == "RifleAmmo" || castCollisions[0].collider.gameObject.tag == "GrenadeAmmo" || castCollisions[0].collider.gameObject.tag == "HealthPack") {
+				rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime);
+			}
 		}
 
 		if (castCollisions[0].collider.gameObject.tag == "Enemy") {
 			player.TakeDamage(0.1);
 		}
-
-
 
 	}
 
